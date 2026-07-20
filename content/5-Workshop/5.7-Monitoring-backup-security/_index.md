@@ -73,7 +73,7 @@ Amazon CloudWatch Logs automatically stores Lambda execution logs when the funct
    /aws/lambda/pharmacare-rag-indexing
    ```
 
-   ![PharmaCare CloudWatch Log Groups](/images/5-Workshop/5.7-mbs/mbs1.jpg)
+   ![PharmaCare CloudWatch Log Groups](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs1.jpg)
 
 Each Lambda function has a separate log group. CloudWatch creates log streams for individual Lambda execution environments.
 
@@ -135,7 +135,7 @@ Amazon Simple Notification Service is used to deliver notifications when a Cloud
 5. Click **Create topic**.
 6. Verify that the topic was created successfully.
 
-   ![Create the PharmaCare SNS alert topic](/images/5-Workshop/5.7-mbs/mbs2.jpg)
+   ![Create the PharmaCare SNS alert topic](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs2.jpg)
 
 The SNS Topic is a centralized notification channel. Multiple CloudWatch Alarms can publish to the same topic without requiring a separate email configuration for each alarm.
 
@@ -166,7 +166,7 @@ After creating the topic, subscribe an administrator email address.
    Pending confirmation
    ```
 
-   ![Create an email subscription for the SNS Topic](/images/5-Workshop/5.7-mbs/mbs3.jpg)
+   ![Create an email subscription for the SNS Topic](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs3.jpg)
 
 ### Confirm the subscription
 
@@ -211,7 +211,7 @@ pharmacare-chatbot-errors-alarm
 pharmacare-backend-errors-alarm
 ```
 
-   ![PharmaCare CloudWatch Alarms](/images/5-Workshop/5.7-mbs/mbs4.jpg)
+   ![PharmaCare CloudWatch Alarms](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs4.jpg)
 
 ### 5.1. High Amazon RDS CPU Alarm
 
@@ -377,7 +377,7 @@ AWS Backup automates scheduled backups of the PharmaCare database.
 
 6. Create the backup plan.
 
-   ![AWS Backup Plan for Amazon RDS](/images/5-Workshop/5.7-mbs/mbs5.jpg)
+   ![AWS Backup Plan for Amazon RDS](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs5.jpg)
 
 The plan contains one rule:
 
@@ -428,7 +428,7 @@ The database must be assigned to the backup plan.
 
 4. Save the resource assignment.
 
-   ![Assign Amazon RDS to the AWS Backup Plan](/images/5-Workshop/5.7-mbs/mbs6.jpg)
+   ![Assign Amazon RDS to the AWS Backup Plan](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs6.jpg)
 
 The Resource ID uses the following format:
 
@@ -492,7 +492,7 @@ AWS WAF protects the website by evaluating malicious web requests before they re
 
 6. During the initial evaluation period, use **Monitor mode** before enforcing blocking actions.
 
-   ![AWS WAF associated with the CloudFront Distribution](/images/5-Workshop/5.7-mbs/mbs7.jpg)
+   ![AWS WAF associated with the CloudFront Distribution](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs7.jpg)
 
 ### Benefits of AWS WAF
 
@@ -549,7 +549,7 @@ pharmacare-cognito-admin-user-policy
 pharmacare-read-rds-secret-policy
 ```
 
-   ![Backend Lambda IAM Role and policies](/images/5-Workshop/5.7-mbs/mbs8.jpg)
+   ![Backend Lambda IAM Role and policies](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs8.jpg)
 
 ### Policy purposes
 
@@ -619,7 +619,7 @@ pharmacare-bedrock-marketplace-access-policy
 pharmacare-rag-access-policy
 ```
 
-   ![AI RAG Lambda IAM Role and policies](/images/5-Workshop/5.7-mbs/mbs9.jpg)
+   ![AI RAG Lambda IAM Role and policies](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs9.jpg)
 
 ### Required AI Lambda permissions
 

@@ -26,7 +26,7 @@ Amazon S3 is used as centralized storage for documents used by the **Retrieval-A
 
 3. Review all configuration settings and click **Create bucket**.
 
-   ![Create an S3 bucket for the knowledge base](/images/5-Workshop/5.5-chat-ai/ai1.jpg)
+   ![Create an S3 bucket for the knowledge base](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai1.jpg)
 
 Enabling **Block all public access** prevents medical documents from being accessed directly from the Internet. The AI Lambda functions read these documents through an IAM role and an S3 Gateway Endpoint inside the VPC.
 
@@ -58,7 +58,7 @@ Enabling **Block all public access** prevents medical documents from being acces
 4. Click **Upload** and upload the text documents to the appropriate folders.
 5. Check the file names, file sizes, and upload status before starting the indexing process.
 
-   ![Knowledge base folder structure in Amazon S3](/images/5-Workshop/5.5-chat-ai/ai2.jpg)
+   ![Knowledge base folder structure in Amazon S3](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai2.jpg)
 
 Organizing documents by prefix makes it easier to classify data sources, track retrieved documents, and expand the knowledge base in the future. When responding to users, the chatbot can also include the file name or document category as a reference source.
 
@@ -84,7 +84,7 @@ The system uses two types of models for different purposes:
 
 5. The model creates vectors with **1024 dimensions** and supports multiple languages, making it suitable for the Vietnamese knowledge base used by PharmaCare.
 
-   ![Cohere Embed Multilingual model in Amazon Bedrock](/images/5-Workshop/5.5-chat-ai/ai3.jpg)
+   ![Cohere Embed Multilingual model in Amazon Bedrock](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai3.jpg)
 
 The embedding model is used in both workflows:
 
@@ -104,7 +104,7 @@ Using the same model for both workflows allows question vectors and document vec
 
 3. This model is used to generate natural-language responses when the `ENABLE_LLM=true` environment variable is enabled.
 
-   ![Amazon Nova Micro model in Amazon Bedrock](/images/5-Workshop/5.5-chat-ai/ai4.jpg)
+   ![Amazon Nova Micro model in Amazon Bedrock](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai4.jpg)
 
 The AI processing flow is designed as follows:
 
@@ -144,7 +144,7 @@ Because the Indexing Lambda and Chatbot Lambda functions are deployed in **Priva
    * **Inbound rules:** No inbound rule is required.
    * **Outbound rules:** Allow Lambda to send HTTPS requests to the required AWS services.
 
-   ![Security Group for AI Lambda functions](/images/5-Workshop/5.5-chat-ai/ai5.jpg)
+   ![Security Group for AI Lambda functions](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai5.jpg)
 
 Lambda is the component that initiates outbound requests, so it does not need to accept inbound connections from the Internet. Leaving the inbound rule list empty reduces the attack surface.
 
@@ -165,7 +165,7 @@ Lambda is the component that initiates outbound requests, so it does not need to
 
 3. The outbound rule can remain at its default value.
 
-   ![Security Group for AI VPC Endpoints](/images/5-Workshop/5.5-chat-ai/ai6.jpg)
+   ![Security Group for AI VPC Endpoints](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai6.jpg)
 
 Referencing the Lambda Security Group as the source ensures that only the AI Lambda functions can connect to the Interface Endpoints over HTTPS, instead of opening the endpoint to the entire VPC CIDR range.
 
@@ -193,7 +193,7 @@ The AI Lambda functions operate in Private Subnets without using a NAT Gateway. 
 
 4. Create the endpoint and confirm that its status changes to `Available`.
 
-   ![S3 Gateway Endpoint for AI Lambda functions](/images/5-Workshop/5.5-chat-ai/ai7.jpg)
+   ![S3 Gateway Endpoint for AI Lambda functions](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai7.jpg)
 
 The S3 Gateway Endpoint allows Lambda to read documents from the bucket without sending traffic through the Internet and without incurring NAT Gateway costs.
 
@@ -214,7 +214,7 @@ The S3 Gateway Endpoint allows Lambda to read documents from the bucket without 
 
 3. Confirm that the endpoint status is `Available`.
 
-   ![Bedrock Runtime Interface Endpoint](/images/5-Workshop/5.5-chat-ai/ai8.jpg)
+   ![Bedrock Runtime Interface Endpoint](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai8.jpg)
 
 The Lambda functions use this endpoint to invoke the Cohere Embedding model and Amazon Nova Micro through the private AWS network.
 
@@ -232,7 +232,7 @@ Create a private endpoint so that the OpenSearch Serverless Collection can only 
 
 3. Confirm that the endpoint status is `Available`.
 
-   ![OpenSearch Serverless VPC Endpoint](/images/5-Workshop/5.5-chat-ai/ai9.jpg)
+   ![OpenSearch Serverless VPC Endpoint](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai9.jpg)
 
 ### 5.4. OpenSearch Serverless Data Interface Endpoint
 
@@ -244,7 +244,7 @@ com.amazonaws.ap-southeast-1.aoss-data
 
 This endpoint handles index creation, vector insertion, and data queries from the Lambda functions.
 
-   ![OpenSearch Serverless Data Endpoint](/images/5-Workshop/5.5-chat-ai/ai10.jpg)
+   ![OpenSearch Serverless Data Endpoint](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai10.jpg)
 
 After completing the endpoint configuration, the AI network flow is as follows:
 
@@ -282,7 +282,7 @@ This architecture removes the need for a NAT Gateway for connections to AWS serv
    * `pharmacare-bedrock-marketplace-access-policy`.
    * `pharmacare-rag-access-policy`.
 
-   ![IAM Role for the Indexing and Chatbot Lambda functions](/images/5-Workshop/5.5-chat-ai/ai11.jpg)
+   ![IAM Role for the Indexing and Chatbot Lambda functions](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai11.jpg)
 
 This IAM Role allows the Lambda functions to:
 
@@ -323,7 +323,7 @@ Create a policy that allows the role to invoke Cohere Embedding and use models d
 }
 ```
 
-   ![IAM policy for accessing Amazon Bedrock models](/images/5-Workshop/5.5-chat-ai/ai12.jpg)
+   ![IAM policy for accessing Amazon Bedrock models](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai12.jpg)
 
 ### 6.2. S3, Bedrock, and OpenSearch Serverless Access Policy
 
@@ -366,7 +366,7 @@ Create the `pharmacare-rag-access-policy` policy:
 }
 ```
 
-   ![IAM policy for accessing the knowledge base and Vector Store](/images/5-Workshop/5.5-chat-ai/ai13.jpg)
+   ![IAM policy for accessing the knowledge base and Vector Store](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai13.jpg)
 
 In a production environment, the `Resource` field should be restricted to the exact model and OpenSearch Collection ARNs to comply with the **Principle of Least Privilege**.
 
@@ -393,7 +393,7 @@ Amazon OpenSearch Serverless is used as the Vector Store for document embeddings
 4. Click **Create** and wait until the collection status changes to `Active`.
 5. Record the OpenSearch endpoint for the Lambda configuration.
 
-   ![PharmaCare OpenSearch Serverless Vector Store](/images/5-Workshop/5.5-chat-ai/ai14.jpg)
+   ![PharmaCare OpenSearch Serverless Vector Store](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai14.jpg)
 
 A private collection ensures that document vectors cannot be accessed directly from the Internet. Only principals defined in the Data Access Policy and connected through the approved VPC Endpoint can access the collection.
 
@@ -415,7 +415,7 @@ Create a Data Access Policy with the following settings:
   aoss:WriteDocument
   ```
 
-   ![Data Access Policy for OpenSearch Serverless](/images/5-Workshop/5.5-chat-ai/ai15.jpg)
+   ![Data Access Policy for OpenSearch Serverless](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai15.jpg)
 
 The IAM Policy and the OpenSearch Data Access Policy are two independent authorization layers. Lambda must be granted permission by both layers before it can write or query vector data.
 
@@ -457,7 +457,7 @@ The Indexing Lambda function converts raw documents stored in S3 into vector dat
 
 4. Package the source code with all dependencies and deploy it to Lambda. The AWS Toolkit extension in Visual Studio Code can also be used by selecting **Deploy (Ctrl+Shift+U)**.
 
-   ![Indexing Lambda source code](/images/5-Workshop/5.5-chat-ai/ai16.jpg)
+   ![Indexing Lambda source code](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai16.jpg)
 
 ### 8.1. Configure Environment Variables
 
@@ -472,7 +472,7 @@ Configure the following six environment variables:
 | `OPENSEARCH_ENDPOINT` | `OpenSearch Serverless collection endpoint` |
 | `OPENSEARCH_INDEX` | `pharmacare-knowledge-index` |
 
-   ![Environment variables of the Indexing Lambda function](/images/5-Workshop/5.5-chat-ai/ai17.jpg)
+   ![Environment variables of the Indexing Lambda function](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai17.jpg)
 
 Bucket names, endpoints, and model IDs should not be hardcoded in the source code. Environment Variables make it possible to change configuration between development, staging, and production environments without modifying the application logic.
 
@@ -493,7 +493,7 @@ Bucket names, endpoints, and model IDs should not be hardcoded in the source cod
    * Created `1186` chunks.
    * Successfully stored the data in the OpenSearch Vector Store.
 
-   ![Indexing Lambda test result](/images/5-Workshop/5.5-chat-ai/ai18.jpg)
+   ![Indexing Lambda test result](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai18.jpg)
 
 This result confirms that the S3 → Lambda → Bedrock Embedding → OpenSearch Serverless workflow is functioning successfully.
 
@@ -531,7 +531,7 @@ The Chatbot Lambda function receives user questions and performs the RAG workflo
 
 3. Deploy the chatbot source code to Lambda.
 
-   ![PharmaCare Chatbot Lambda function](/images/5-Workshop/5.5-chat-ai/ai19.jpg)
+   ![PharmaCare Chatbot Lambda function](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai19.jpg)
 
 ### 9.1. Configure Environment Variables
 
@@ -546,7 +546,7 @@ The Chatbot Lambda function receives user questions and performs the RAG workflo
 | `OPENSEARCH_INDEX` | `pharmacare-knowledge-index` |
 | `TOP_K` | `3` |
 
-   ![Environment variables of the Chatbot Lambda function](/images/5-Workshop/5.5-chat-ai/ai20.jpg)
+   ![Environment variables of the Chatbot Lambda function](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai20.jpg)
 
 Important environment variables:
 
@@ -573,7 +573,7 @@ Click **Test** and verify that:
 * The response includes reference content and document sources.
 * No timeout, DNS, or IAM permission errors occur.
 
-   ![Chatbot Lambda test result](/images/5-Workshop/5.5-chat-ai/ai21.jpg)
+   ![Chatbot Lambda test result](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai21.jpg)
 
 During development, `ENABLE_LLM=false` helps reduce token quota consumption. The chatbot still performs semantic search using Cohere Embedding and OpenSearch, then returns information retrieved from the internal knowledge base.
 
@@ -628,7 +628,7 @@ After the Chatbot Lambda function operates successfully, integrate the chatbot i
    VITE_CHAT_API_URL=https://your-api-id.execute-api.ap-southeast-1.amazonaws.com/chat
    ```
 
-   ![Integrate the chatbot into the React frontend](/images/5-Workshop/5.5-chat-ai/ai22.jpg)
+   ![Integrate the chatbot into the React frontend](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai22.jpg)
 
 To prevent CORS errors, API Gateway or the Lambda Function URL must allow the PharmaCare frontend origin and support the `POST` and `OPTIONS` methods.
 

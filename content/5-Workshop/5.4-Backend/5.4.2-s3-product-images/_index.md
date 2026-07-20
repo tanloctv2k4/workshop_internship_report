@@ -20,7 +20,7 @@ pre : " <b> 5.4.2 </b> "
    * **Default encryption:** Select **Server-side encryption with Amazon S3 managed keys (SSE-S3)** and enable **Bucket Key: Enable** to automatically encrypt data at rest while reducing encryption API call costs.
 3. Review the visual configuration summary and click **Create bucket** to complete the initialization.
 
-   ![Create S3 Bucket for PharmaCare](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket1.jpg)
+   ![Create S3 Bucket for PharmaCare](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket1.jpg)
 
 Configuring the S3 Bucket with **Block all public access** enabled is a mandatory standard in PharmaCare's Cloud Native architecture. Instead of exposing the bucket directly to the internet—which introduces DDoS vulnerabilities, unauthorized scraping risks, and high data transfer costs—the system seals the origin storage and delegates public delivery exclusively to the Content Delivery Network (CloudFront CDN) leveraging AWS automated security features.
 
@@ -36,16 +36,16 @@ Configuring the S3 Bucket with **Block all public access** enabled is a mandator
    * **Server-side encryption:** Select **Don't specify an encryption key** (The folder will automatically inherit the bucket's default SSE-S3 encryption settings).
    * Click **Create folder** to confirm.
 
-   ![Create products folder in S3](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket2.jpg)
+   ![Create products folder in S3](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket2.jpg)
 
 4. Once the `products/` folder appears in the objects list with an active status, click directly on the folder to navigate into its internal storage space.
 
-   ![Objects list in bucket](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket3.jpg)
+   ![Objects list in bucket](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket3.jpg)
 
 5. Click **Upload**, then select **Add files** and choose the collection of PharmaCare's AI-generated product images (from `PC-0001.png` to `PC-0016.png` along with related files, totaling 193 objects).
 6. Keep the storage class at **Standard** and click **Upload** to initiate data transfer to the cloud.
 
-   ![Upload product images into products folder](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket4.jpg)
+   ![Upload product images into products folder](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket4.jpg)
 
 Although Amazon S3 stores data using a flat storage schema, utilizing prefix folders such as `products/` helps logically organize namespaces, facilitates object categorization, simplifies lifecycle rule implementations, and supports precise routing configurations on the CDN as the system scales.
 
@@ -57,7 +57,7 @@ Although Amazon S3 stores data using a flat storage schema, utilizing prefix fol
 1. Open the [Amazon CloudFront console](https://console.aws.amazon.com/cloudfront/v3/home), navigate to **Distributions**, and click **Create distribution**.
 2. **Step 1 - Choose a plan:** Select the **Free ($0/month)** plan designed for learning and system development, which includes built-in Always-on DDoS protection, free TLS certificates, Tiered caching, and a monthly quota of 1M requests / 100GB data transfer. Click **Next**.
 
-   ![Select CloudFront Free Plan](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket5.jpg)
+   ![Select CloudFront Free Plan](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket5.jpg)
 
 3. **Step 2 - Get started (Distribution options):**
    * **Distribution name:** `pharmacare-product-images-cdn` (System identifier for the CDN network).
@@ -65,7 +65,7 @@ Although Amazon S3 stores data using a flat storage schema, utilizing prefix fol
    * **Distribution type:** Choose **Single website or app** (Optimizes configuration for standalone application architectures).
    * Click **Next**.
 
-   ![Configure basic CloudFront settings](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket6.jpg)
+   ![Configure basic CloudFront settings](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket6.jpg)
 
 4. **Step 3 - Specify origin:**
    * **Origin type:** Select **Amazon S3**.
@@ -75,19 +75,19 @@ Although Amazon S3 stores data using a flat storage schema, utilizing prefix fol
    * **Cache settings:** Select **Use recommended cache settings tailored to serving S3 content** (Optimizes edge caching for static assets).
    * Click **Next**.
 
-   ![Configure S3 Origin for CloudFront](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket7.jpg)
+   ![Configure S3 Origin for CloudFront](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket7.jpg)
 
 5. **Step 4 - Enable security:**
    * Under **Web Application Firewall (WAF)**, the built-in security mode (**Included security protections**) is automatically activated to protect the application against common web vulnerabilities, block malicious scanning agents, and restrict IPs from threat intelligence lists.
    * Click **Next**.
 
-   ![Enable integrated WAF security](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket8.jpg)
+   ![Enable integrated WAF security](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket8.jpg)
 
 6. **Step 5 - Review and create:**
    * Review all overall configuration settings. Take note of the system message: *"Because you granted CloudFront access to your origin, CloudFront can write and update S3 bucket policies that restrict access to your S3 origin to CloudFront"*.
    * Click **Create distribution** to initiate the global edge network deployment process.
 
-   ![Review and create CloudFront Distribution](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket9.jpg)
+   ![Review and create CloudFront Distribution](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket9.jpg)
 
 Amazon CloudFront acts as a global content delivery network powered by hundreds of Edge Locations worldwide. When end-users access the PharmaCare frontend, product images are served directly from the nearest edge server rather than routing requests back to the origin S3 bucket in Singapore, delivering substantial architectural benefits:
 * **Latency Minimization:** Accelerates page loading speeds significantly, providing a seamless user experience.
@@ -104,7 +104,7 @@ Amazon CloudFront acts as a global content delivery network powered by hundreds 
    * **Distribution domain name:** `d2sq4q0ymcz8do.cloudfront.net` (The official public domain used to access product image resources).
    * **ARN:** `arn:aws:cloudfront::392646748514:distribution/E105N1I4TWNVYQ`.
 
-   ![Successful CloudFront deployment status](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket10.jpg)
+   ![Successful CloudFront deployment status](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket10.jpg)
 
 3. **Smoke Test:** Open a web browser and test access to an actual image path using the CDN domain format:
    `https://d2sq4q0ymcz8do.cloudfront.net/products/PC-0001.png` to verify that assets are successfully served via CloudFront without requiring public read permissions on the S3 bucket.
@@ -151,7 +151,7 @@ Amazon CloudFront acts as a global content delivery network powered by hundreds 
      };
      ```
 
-   ![Edit migration source code in VS Code](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket11.jpg)
+   ![Edit migration source code in VS Code](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket11.jpg)
 
 3. Package the source code along with its dependencies (`node_modules`) into a compressed `function.zip` archive using the Terminal (PowerShell) command:
    ```powershell
@@ -160,7 +160,7 @@ Amazon CloudFront acts as a global content delivery network powered by hundreds 
 4. Open the [AWS Lambda console](https://ap-southeast-1.console.aws.amazon.com/lambda/home?region=ap-southeast-1#/functions), search for, and select the serverless function responsible for database migration: `pharmacare-db-migration`.
 5. Under the **Code source** interface, click **Upload from** -> **.zip file** and upload the newly packaged `function.zip` file (Alternatively, use the AWS Toolkit extension directly in VS Code by pressing **Deploy (Ctrl+Shift+U)** to publish to AWS Lambda).
 
-   ![Update and deploy code to AWS Lambda](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket12.jpg)
+   ![Update and deploy code to AWS Lambda](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket12.jpg)
 
 6. Execute (Test) the Lambda function to trigger the SQL migration command. Verify execution logs in Amazon CloudWatch Logs to confirm that all product records in Amazon RDS have successfully updated their `image_url` fields to point toward the CloudFront CDN endpoint.
 

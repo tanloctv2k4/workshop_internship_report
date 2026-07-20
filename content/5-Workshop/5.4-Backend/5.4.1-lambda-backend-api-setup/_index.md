@@ -53,7 +53,7 @@ pharmacare-backend-api
 
 Select the **Node.js 22.x** runtime. Attach the Lambda function to the prepared VPC, Private App Subnets, and Security Group. The Lambda Security Group must be allowed to connect to the Amazon RDS Security Group on PostgreSQL port `5432`.
 
-![Lambda backend overview](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/01-lambda-overview.png)
+![Lambda backend overview](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/01-lambda-overview.png)
 
 #### Step 2: Configure Lambda resources
 
@@ -68,7 +68,7 @@ Open **Configuration → General configuration → Edit** and configure:
 
 The default three-second timeout is often too short when Lambda must initialize networking, retrieve a secret, and connect to Amazon RDS.
 
-![Lambda memory, timeout, and IAM role configuration](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/02-general-configuration.png)
+![Lambda memory, timeout, and IAM role configuration](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/02-general-configuration.png)
 
 #### Step 3: Add environment variables
 
@@ -81,7 +81,7 @@ Open **Configuration → Environment variables → Edit** and add:
 
 Do not hardcode the database username or password in the source code.
 
-![Lambda environment variables](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/03-environment-variables.png)
+![Lambda environment variables](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/03-environment-variables.png)
 
 #### Step 4: Create the backend project
 
@@ -97,7 +97,7 @@ npm install pg @aws-sdk/client-secrets-manager
 
 The `pg` package provides PostgreSQL connectivity, while `@aws-sdk/client-secrets-manager` retrieves credentials from AWS Secrets Manager.
 
-![Node.js backend project and dependencies](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/04-backend-project-dependencies.png)
+![Node.js backend project and dependencies](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/04-backend-project-dependencies.png)
 
 #### Step 5: Implement the Lambda handler
 
@@ -123,7 +123,7 @@ Compress-Archive `
 
 The files must be located at the root of the ZIP package.
 
-![Packaging the Lambda deployment file](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/05-package-lambda-code.png)
+![Packaging the Lambda deployment file](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/05-package-lambda-code.png)
 
 #### Step 7: Upload the deployment package
 
@@ -135,17 +135,17 @@ In the Lambda **Code** tab:
 4. Confirm that the handler is `index.handler`.
 5. Select **Deploy**.
 
-![Lambda code after deployment](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/06-upload-lambda-code.png)
+![Lambda code after deployment](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/06-upload-lambda-code.png)
 
 #### Step 8: Create an API Gateway HTTP API
 
 Open **Amazon API Gateway → Create API** and select **HTTP API**.
 
-![Selecting the HTTP API type](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/07-select-http-api.png)
+![Selecting the HTTP API type](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/07-select-http-api.png)
 
 Choose `pharmacare-backend-api` as the Lambda integration target.
 
-![Integrating the HTTP API with Lambda](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/08-configure-api-integration.png)
+![Integrating the HTTP API with Lambda](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/08-configure-api-integration.png)
 
 #### Step 9: Create public routes
 
@@ -159,21 +159,21 @@ Create the following unauthenticated routes:
 | `GET` | `/categories` | Retrieve categories |
 | `GET` | `/stores` | Retrieve stores |
 
-![Public HTTP API routes](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/09-configure-public-routes.png)
+![Public HTTP API routes](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/09-configure-public-routes.png)
 
 #### Step 10: Configure the stage
 
 Use the `$default` stage and enable **Auto-deploy**.
 
-![Default stage configuration](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/10-define-default-stage.png)
+![Default stage configuration](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/10-define-default-stage.png)
 
 Review the integrations, routes, and stage, then create the API.
 
-![HTTP API review page](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/11-review-create-api.png)
+![HTTP API review page](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/11-review-create-api.png)
 
 Verify the routes under **Develop → Routes**.
 
-![HTTP API routes after creation](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/12-api-routes-created.png)
+![HTTP API routes after creation](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/12-api-routes-created.png)
 
 #### Step 11: Configure CORS
 
@@ -187,7 +187,7 @@ Open **Develop → CORS** and configure:
 | Max age | `3600` |
 | Allow credentials | `No` |
 
-![CORS configuration for the local frontend](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/13-configure-cors.png)
+![CORS configuration for the local frontend](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/13-configure-cors.png)
 
 #### Step 12: Create a Cognito JWT Authorizer
 
@@ -202,9 +202,9 @@ Open **Develop → Authorization → Manage authorizers → Create** and select 
 
 Do not use a client secret in a browser-based Single Page Application.
 
-![Creating the Cognito JWT Authorizer](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/14-create-jwt-authorizer.png)
+![Creating the Cognito JWT Authorizer](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/14-create-jwt-authorizer.png)
 
-![JWT Authorizer after creation](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/15-authorizer-created.png)
+![JWT Authorizer after creation](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/15-authorizer-created.png)
 
 #### Step 13: Protect private routes
 
@@ -221,13 +221,13 @@ Attach `pharmacare-cognito-authorizer` to:
 | `GET` | `/orders` |
 | `GET` | `/orders/{id}` |
 
-![Attaching the authorizer to GET profile](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/16-attach-authorizer-route.png)
+![Attaching the authorizer to GET profile](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/16-attach-authorizer-route.png)
 
 #### Step 14: Test Cognito sign-in
 
 Sign in with the previously created Customer account. Cognito redirects the user back to the frontend callback URL after successful authentication.
 
-![Cognito sign-in test](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/17-cognito-login-test.png)
+![Cognito sign-in test](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/17-cognito-login-test.png)
 
 #### Step 15: Create the ReactJS test application
 
@@ -242,7 +242,7 @@ npm install react-oidc-context
 npm run dev
 ```
 
-![Creating the React application with Vite](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/18-create-react-vite.png)
+![Creating the React application with Vite](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/18-create-react-vite.png)
 
 Open:
 
@@ -250,7 +250,7 @@ Open:
 http://localhost:5173
 ```
 
-![React development server](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/19-react-development-server.png)
+![React development server](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/19-react-development-server.png)
 
 #### Step 16: Build a simple test interface
 
@@ -260,7 +260,7 @@ Create a simple interface with Cognito sign-in and sign-out buttons, public API 
 Authorization: Bearer <access_token>
 ```
 
-![React test interface code](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/20-react-test-interface-code.png)
+![React test interface code](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/20-react-test-interface-code.png)
 
 #### Step 17: Verify the result
 
@@ -273,7 +273,7 @@ Authorization: Bearer <access_token>
 | Call `/cart` and `/orders` with a valid JWT | Lambda processes the request and accesses RDS |
 | Send an expired token or incorrect audience | API Gateway returns an authorization error |
 
-![End-to-end test result](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/21-api-test-result.png)
+![End-to-end test result](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/21-api-test-result.png)
 
 #### Result
 

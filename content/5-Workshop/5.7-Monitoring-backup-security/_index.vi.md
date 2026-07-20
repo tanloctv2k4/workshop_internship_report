@@ -73,7 +73,7 @@ Amazon CloudWatch Logs tự động lưu nhật ký thực thi của AWS Lambda 
    /aws/lambda/pharmacare-rag-indexing
    ```
 
-   ![Danh sách CloudWatch Log Groups của PharmaCare](/images/5-Workshop/5.7-mbs/mbs1.jpg)
+   ![Danh sách CloudWatch Log Groups của PharmaCare](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs1.jpg)
 
 Mỗi Lambda function có một log group riêng. Bên trong log group, CloudWatch tạo các log stream tương ứng với từng execution environment.
 
@@ -135,7 +135,7 @@ Amazon Simple Notification Service được sử dụng làm kênh gửi thông 
 5. Nhấn **Create topic**.
 6. Kiểm tra topic được tạo thành công.
 
-   ![Tạo SNS Topic gửi cảnh báo PharmaCare](/images/5-Workshop/5.7-mbs/mbs2.jpg)
+   ![Tạo SNS Topic gửi cảnh báo PharmaCare](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs2.jpg)
 
 SNS Topic đóng vai trò là điểm nhận thông báo tập trung. Nhiều CloudWatch Alarm có thể cùng gửi cảnh báo đến một topic, giúp quản trị viên không phải cấu hình email riêng cho từng alarm.
 
@@ -166,7 +166,7 @@ Sau khi tạo topic, cần đăng ký email của quản trị viên để nhậ
    Pending confirmation
    ```
 
-   ![Tạo Email Subscription cho SNS Topic](/images/5-Workshop/5.7-mbs/mbs3.jpg)
+   ![Tạo Email Subscription cho SNS Topic](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs3.jpg)
 
 ### Xác nhận subscription
 
@@ -211,7 +211,7 @@ pharmacare-chatbot-errors-alarm
 pharmacare-backend-errors-alarm
 ```
 
-   ![Danh sách CloudWatch Alarm của PharmaCare](/images/5-Workshop/5.7-mbs/mbs4.jpg)
+   ![Danh sách CloudWatch Alarm của PharmaCare](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs4.jpg)
 
 ### 5.1. Alarm CPU Cao Cho Amazon RDS
 
@@ -379,7 +379,7 @@ AWS Backup được sử dụng để tự động hóa quá trình sao lưu dat
 
 6. Hoàn tất tạo backup plan.
 
-   ![AWS Backup Plan cho Amazon RDS](/images/5-Workshop/5.7-mbs/mbs5.jpg)
+   ![AWS Backup Plan cho Amazon RDS](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs5.jpg)
 
 Backup plan trong hệ thống có một rule:
 
@@ -430,7 +430,7 @@ Sau khi tạo backup plan, cần chỉ định database được bảo vệ.
 
 4. Lưu cấu hình resource assignment.
 
-   ![Gán Amazon RDS vào AWS Backup Plan](/images/5-Workshop/5.7-mbs/mbs6.jpg)
+   ![Gán Amazon RDS vào AWS Backup Plan](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs6.jpg)
 
 Resource ID trong cấu hình có dạng:
 
@@ -496,7 +496,7 @@ AWS WAF bảo vệ website trước các request web độc hại trước khi c
 
 6. Trong giai đoạn đầu, có thể chạy ở **Monitor mode** để theo dõi request trước khi áp dụng chặn.
 
-   ![AWS WAF được gắn với CloudFront Distribution](/images/5-Workshop/5.7-mbs/mbs7.jpg)
+   ![AWS WAF được gắn với CloudFront Distribution](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs7.jpg)
 
 ### Vai trò của AWS WAF
 
@@ -553,7 +553,7 @@ pharmacare-cognito-admin-user-policy
 pharmacare-read-rds-secret-policy
 ```
 
-   ![IAM Role và policy của Backend Lambda](/images/5-Workshop/5.7-mbs/mbs8.jpg)
+   ![IAM Role và policy của Backend Lambda](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs8.jpg)
 
 ### Ý nghĩa của các policy
 
@@ -623,7 +623,7 @@ pharmacare-bedrock-marketplace-access-policy
 pharmacare-rag-access-policy
 ```
 
-   ![IAM Role và policy của Lambda AI RAG](/images/5-Workshop/5.7-mbs/mbs9.jpg)
+   ![IAM Role và policy của Lambda AI RAG](/workshop_internship_report/images/5-Workshop/5.7-mbs/mbs9.jpg)
 
 ### Quyền cần thiết của Lambda AI
 

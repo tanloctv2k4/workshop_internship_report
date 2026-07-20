@@ -23,4 +23,4 @@ Các tài nguyên này được triển khai bên trong các phân mạng riêng
 
 + **Kiểm soát truy cập:** Security Group được sử dụng để kiểm soát kết nối từ Lambda đến Amazon RDS và Amazon OpenSearch Service thông qua các cổng dịch vụ cần thiết.
 
-![Kiến trúc VPC và Database](/images/5-Workshop/5.2-vpc-data/dia1.png)
+![Kiến trúc VPC và Database](/workshop_internship_report/images/5-Workshop/5.2-vpc-data/dia1.png)

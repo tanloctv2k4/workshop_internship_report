@@ -40,7 +40,7 @@ pharmacare-backend-api
 
 Chọn runtime **Node.js 22.x**, sau đó gắn hàm Lambda vào đúng VPC, Private App Subnet và Security Group đã chuẩn bị. Security Group của Lambda phải được phép kết nối đến Security Group của Amazon RDS trên cổng PostgreSQL `5432`.
 
-![Tổng quan hàm Lambda backend](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/01-lambda-overview.png)
+![Tổng quan hàm Lambda backend](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/01-lambda-overview.png)
 
 #### Bước 2: Cấu hình tài nguyên cho Lambda
 
@@ -55,7 +55,7 @@ Trong Lambda, vào **Configuration → General configuration → Edit** và cấ
 
 Timeout mặc định 3 giây thường không đủ khi Lambda cần khởi tạo kết nối mạng, đọc secret và truy vấn Amazon RDS. Trong môi trường workshop, thời gian chờ 10 giây phù hợp cho quá trình kiểm thử ban đầu.
 
-![Cấu hình Memory, Timeout và IAM Role](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/02-general-configuration.png)
+![Cấu hình Memory, Timeout và IAM Role](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/02-general-configuration.png)
 
 #### Bước 3: Thêm Environment Variables
 
@@ -68,7 +68,7 @@ Vào **Configuration → Environment variables → Edit** và thêm các biến 
 
 Không ghi trực tiếp username hoặc password của database vào mã nguồn. Lambda sẽ sử dụng `RDS_SECRET_ARN` để đọc thông tin kết nối từ AWS Secrets Manager khi hàm được thực thi.
 
-![Cấu hình biến môi trường cho Lambda](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/03-environment-variables.png)
+![Cấu hình biến môi trường cho Lambda](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/03-environment-variables.png)
 
 #### Bước 4: Tạo project backend trên Visual Studio Code
 
@@ -87,7 +87,7 @@ Các thư viện chính được sử dụng:
 + `pg`: tạo kết nối và truy vấn Amazon RDS PostgreSQL.
 + `@aws-sdk/client-secrets-manager`: đọc thông tin kết nối database từ AWS Secrets Manager.
 
-![Khởi tạo project và cài đặt thư viện Node.js](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/04-backend-project-dependencies.png)
+![Khởi tạo project và cài đặt thư viện Node.js](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/04-backend-project-dependencies.png)
 
 #### Bước 5: Viết mã nguồn Lambda
 
@@ -131,7 +131,7 @@ Compress-Archive `
 
 Các file phải nằm trực tiếp ở thư mục gốc của file ZIP. Không nén cả thư mục cha của project vì Lambda sẽ không tìm thấy handler.
 
-![Đóng gói source code thành function.zip](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/05-package-lambda-code.png)
+![Đóng gói source code thành function.zip](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/05-package-lambda-code.png)
 
 #### Bước 7: Tải mã nguồn lên Lambda
 
@@ -144,17 +144,17 @@ Trong tab **Code** của Lambda:
 5. Kiểm tra Handler là `index.handler`.
 6. Chọn **Deploy** để áp dụng phiên bản mã nguồn mới.
 
-![Mã nguồn backend sau khi tải lên Lambda](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/06-upload-lambda-code.png)
+![Mã nguồn backend sau khi tải lên Lambda](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/06-upload-lambda-code.png)
 
 #### Bước 8: Tạo Amazon API Gateway HTTP API
 
 Truy cập **Amazon API Gateway → Create API** và chọn loại **HTTP API**. HTTP API được sử dụng để tạo URL public cho frontend ReactJS gọi đến Lambda.
 
-![Chọn loại Amazon API Gateway HTTP API](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/07-select-http-api.png)
+![Chọn loại Amazon API Gateway HTTP API](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/07-select-http-api.png)
 
 Trong phần **Integrations**, chọn Lambda function `pharmacare-backend-api` làm integration target.
 
-![Tích hợp HTTP API với Lambda backend](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/08-configure-api-integration.png)
+![Tích hợp HTTP API với Lambda backend](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/08-configure-api-integration.png)
 
 #### Bước 9: Tạo các route public
 
@@ -170,21 +170,21 @@ Khai báo các route không yêu cầu đăng nhập:
 
 Tất cả các route trên sử dụng integration target `pharmacare-backend-api`.
 
-![Khai báo các route public](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/09-configure-public-routes.png)
+![Khai báo các route public](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/09-configure-public-routes.png)
 
 #### Bước 10: Cấu hình Stage
 
 Tại bước **Define stages**, sử dụng stage `$default` và bật **Auto-deploy**. Khi route hoặc integration được thay đổi, cấu hình mới sẽ tự động được triển khai mà không cần tạo deployment thủ công.
 
-![Cấu hình stage mặc định cho HTTP API](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/10-define-default-stage.png)
+![Cấu hình stage mặc định cho HTTP API](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/10-define-default-stage.png)
 
 Kiểm tra lại integration, route và stage trước khi chọn **Create**.
 
-![Kiểm tra cấu hình trước khi tạo API](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/11-review-create-api.png)
+![Kiểm tra cấu hình trước khi tạo API](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/11-review-create-api.png)
 
 Sau khi API được tạo, kiểm tra danh sách route trong mục **Develop → Routes**.
 
-![Danh sách route sau khi tạo HTTP API](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/12-api-routes-created.png)
+![Danh sách route sau khi tạo HTTP API](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/12-api-routes-created.png)
 
 #### Bước 11: Cấu hình CORS
 
@@ -200,7 +200,7 @@ Vào **Develop → CORS** và nhập cấu hình dùng cho frontend local:
 
 `localhost:5173` là địa chỉ mặc định của Vite. `localhost:3000` được giữ lại để hỗ trợ trường hợp frontend chạy bằng công cụ khác.
 
-![Cấu hình CORS cho ReactJS](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/13-configure-cors.png)
+![Cấu hình CORS cho ReactJS](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/13-configure-cors.png)
 
 #### Bước 12: Tạo Cognito JWT Authorizer
 
@@ -222,11 +222,11 @@ Trong đó:
 
 Không đưa Client Secret vào frontend ReactJS. Đối với ứng dụng Single Page Application, App Client nên được cấu hình không sử dụng client secret.
 
-![Tạo Cognito JWT Authorizer](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/14-create-jwt-authorizer.png)
+![Tạo Cognito JWT Authorizer](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/14-create-jwt-authorizer.png)
 
 Sau khi tạo thành công, authorizer sẽ xuất hiện trong danh sách quản lý của API Gateway.
 
-![JWT Authorizer sau khi được tạo](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/15-authorizer-created.png)
+![JWT Authorizer sau khi được tạo](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/15-authorizer-created.png)
 
 #### Bước 13: Gắn Authorizer vào các route riêng tư
 
@@ -247,13 +247,13 @@ Các route cần gắn `pharmacare-cognito-authorizer`:
 
 Đối với từng route, chọn **Attach authorizer**, chọn `pharmacare-cognito-authorizer` và lưu cấu hình.
 
-![Gắn Cognito Authorizer vào route GET profile](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/16-attach-authorizer-route.png)
+![Gắn Cognito Authorizer vào route GET profile](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/16-attach-authorizer-route.png)
 
 #### Bước 14: Kiểm tra đăng nhập bằng Cognito
 
 Sử dụng tài khoản Customer đã tạo trong Cognito để đăng nhập. Sau khi nhập đúng thông tin, Cognito chuyển người dùng trở lại địa chỉ callback của frontend cùng trạng thái xác thực.
 
-![Kiểm tra đăng nhập bằng tài khoản Cognito](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/17-cognito-login-test.png)
+![Kiểm tra đăng nhập bằng tài khoản Cognito](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/17-cognito-login-test.png)
 
 #### Bước 15: Tạo frontend ReactJS để kiểm tra API
 
@@ -268,7 +268,7 @@ npm install react-oidc-context
 npm run dev
 ```
 
-![Tạo ứng dụng ReactJS bằng Vite](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/18-create-react-vite.png)
+![Tạo ứng dụng ReactJS bằng Vite](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/18-create-react-vite.png)
 
 Sau khi Vite khởi động, truy cập:
 
@@ -276,7 +276,7 @@ Sau khi Vite khởi động, truy cập:
 http://localhost:5173
 ```
 
-![Ứng dụng ReactJS chạy trên máy local](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/19-react-development-server.png)
+![Ứng dụng ReactJS chạy trên máy local](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/19-react-development-server.png)
 
 #### Bước 16: Tạo giao diện kiểm thử
 
@@ -293,7 +293,7 @@ Khi gọi protected API, frontend phải gửi token trong header:
 Authorization: Bearer <access_token>
 ```
 
-![Code giao diện ReactJS dùng để kiểm thử](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/20-react-test-interface-code.png)
+![Code giao diện ReactJS dùng để kiểm thử](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/20-react-test-interface-code.png)
 
 #### Bước 17: Kiểm tra kết quả
 
@@ -310,7 +310,7 @@ Thực hiện các kịch bản kiểm thử sau:
 
 Giao diện kiểm thử hiển thị trạng thái đăng nhập, các nút gọi API và dữ liệu JSON trả về từ backend.
 
-![Kết quả kiểm thử frontend, API Gateway và Lambda](/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/21-api-test-result.png)
+![Kết quả kiểm thử frontend, API Gateway và Lambda](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.1-lambda-backend-api-setup/21-api-test-result.png)
 
 #### Kết quả đạt được
 

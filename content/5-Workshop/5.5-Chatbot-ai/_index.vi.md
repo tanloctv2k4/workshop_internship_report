@@ -26,7 +26,7 @@ Amazon S3 được sử dụng làm nơi lưu trữ tập trung các tài liệu
 
 3. Kiểm tra lại cấu hình và nhấn **Create bucket**.
 
-   ![Khởi tạo S3 Bucket lưu trữ kho tri thức](/images/5-Workshop/5.5-chat-ai/ai1.jpg)
+   ![Khởi tạo S3 Bucket lưu trữ kho tri thức](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai1.jpg)
 
 Việc bật **Block all public access** giúp tài liệu y tế không bị truy cập trực tiếp từ Internet. Lambda AI sẽ đọc tài liệu bằng IAM Role và đi qua S3 Gateway Endpoint trong mạng VPC.
 
@@ -58,7 +58,7 @@ Việc bật **Block all public access** giúp tài liệu y tế không bị tr
 4. Nhấn **Upload** và tải các tài liệu định dạng văn bản lên đúng thư mục tương ứng.
 5. Kiểm tra tên tệp, dung lượng và trạng thái upload trước khi thực hiện quá trình indexing.
 
-   ![Cấu trúc thư mục kho tri thức trên Amazon S3](/images/5-Workshop/5.5-chat-ai/ai2.jpg)
+   ![Cấu trúc thư mục kho tri thức trên Amazon S3](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai2.jpg)
 
 Cách tổ chức tài liệu theo prefix giúp hệ thống dễ dàng phân loại nguồn dữ liệu, theo dõi tài liệu được truy xuất và mở rộng kho tri thức trong tương lai. Khi trả lời, chatbot có thể đính kèm tên tệp hoặc nhóm tài liệu làm nguồn tham khảo.
 
@@ -84,7 +84,7 @@ Hệ thống sử dụng hai loại mô hình với nhiệm vụ khác nhau:
 
 5. Mô hình tạo vector có kích thước **1024 dimensions** và hỗ trợ nhiều ngôn ngữ, phù hợp với kho tài liệu tiếng Việt của PharmaCare.
 
-   ![Mô hình Cohere Embed Multilingual trên Amazon Bedrock](/images/5-Workshop/5.5-chat-ai/ai3.jpg)
+   ![Mô hình Cohere Embed Multilingual trên Amazon Bedrock](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai3.jpg)
 
 Mô hình embedding được sử dụng ở cả hai luồng:
 
@@ -104,7 +104,7 @@ Nhờ sử dụng cùng một mô hình, vector của câu hỏi và vector củ
 
 3. Mô hình được dùng để tạo câu trả lời tự nhiên khi biến môi trường `ENABLE_LLM=true`.
 
-   ![Mô hình Amazon Nova Micro trên Amazon Bedrock](/images/5-Workshop/5.5-chat-ai/ai4.jpg)
+   ![Mô hình Amazon Nova Micro trên Amazon Bedrock](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai4.jpg)
 
 Luồng xử lý AI được thiết kế như sau:
 
@@ -144,7 +144,7 @@ Do Lambda Indexing và Lambda Chatbot được đặt trong **Private Subnet**, 
    * **Inbound rules:** Không cần mở cổng inbound.
    * **Outbound rules:** Cho phép Lambda gửi yêu cầu HTTPS đến các dịch vụ AWS cần thiết.
 
-   ![Security Group dành cho Lambda AI](/images/5-Workshop/5.5-chat-ai/ai5.jpg)
+   ![Security Group dành cho Lambda AI](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai5.jpg)
 
 Lambda là thành phần chủ động gửi yêu cầu nên không cần nhận kết nối từ Internet. Việc không cấu hình inbound rule giúp giảm bề mặt tấn công.
 
@@ -165,7 +165,7 @@ Lambda là thành phần chủ động gửi yêu cầu nên không cần nhận
 
 3. Outbound rule có thể giữ cấu hình mặc định.
 
-   ![Security Group dành cho AI VPC Endpoint](/images/5-Workshop/5.5-chat-ai/ai6.jpg)
+   ![Security Group dành cho AI VPC Endpoint](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai6.jpg)
 
 Cấu hình Security Group tham chiếu lẫn nhau giúp chỉ các Lambda AI được phép kết nối đến Interface Endpoint qua HTTPS, thay vì mở cổng cho toàn bộ dải CIDR của VPC.
 
@@ -193,7 +193,7 @@ Lambda AI hoạt động trong Private Subnet và không sử dụng NAT Gateway
 
 4. Tạo endpoint và kiểm tra trạng thái chuyển sang `Available`.
 
-   ![S3 Gateway Endpoint cho Lambda AI](/images/5-Workshop/5.5-chat-ai/ai7.jpg)
+   ![S3 Gateway Endpoint cho Lambda AI](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai7.jpg)
 
 S3 Gateway Endpoint cho phép Lambda đọc tài liệu trong bucket mà không truyền dữ liệu qua Internet và không phát sinh chi phí NAT Gateway.
 
@@ -214,7 +214,7 @@ S3 Gateway Endpoint cho phép Lambda đọc tài liệu trong bucket mà không 
 
 3. Kiểm tra trạng thái endpoint là `Available`.
 
-   ![Bedrock Runtime Interface Endpoint](/images/5-Workshop/5.5-chat-ai/ai8.jpg)
+   ![Bedrock Runtime Interface Endpoint](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai8.jpg)
 
 Endpoint này được Lambda sử dụng để gọi mô hình Cohere Embedding và Amazon Nova Micro qua mạng riêng của AWS.
 
@@ -232,7 +232,7 @@ Tạo endpoint riêng tư để OpenSearch Serverless Collection chỉ có thể
 
 3. Kiểm tra endpoint ở trạng thái `Available`.
 
-   ![OpenSearch Serverless VPC Endpoint](/images/5-Workshop/5.5-chat-ai/ai9.jpg)
+   ![OpenSearch Serverless VPC Endpoint](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai9.jpg)
 
 ### 5.4. OpenSearch Serverless Data Interface Endpoint
 
@@ -244,7 +244,7 @@ com.amazonaws.ap-southeast-1.aoss-data
 
 Endpoint này phục vụ các yêu cầu tạo index, ghi vector và truy vấn dữ liệu từ Lambda.
 
-   ![OpenSearch Serverless Data Endpoint](/images/5-Workshop/5.5-chat-ai/ai10.jpg)
+   ![OpenSearch Serverless Data Endpoint](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai10.jpg)
 
 Sau khi hoàn tất, luồng kết nối mạng của hệ thống AI như sau:
 
@@ -282,7 +282,7 @@ Kiến trúc này loại bỏ nhu cầu sử dụng NAT Gateway cho các kết n
    * `pharmacare-bedrock-marketplace-access-policy`.
    * `pharmacare-rag-access-policy`.
 
-   ![IAM Role dành cho Lambda Indexing và Lambda Chatbot](/images/5-Workshop/5.5-chat-ai/ai11.jpg)
+   ![IAM Role dành cho Lambda Indexing và Lambda Chatbot](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai11.jpg)
 
 IAM Role này cho phép Lambda:
 
@@ -323,7 +323,7 @@ Tạo policy cho phép gọi Cohere Embedding và sử dụng model thuộc AWS 
 }
 ```
 
-   ![IAM Policy truy cập mô hình Bedrock](/images/5-Workshop/5.5-chat-ai/ai12.jpg)
+   ![IAM Policy truy cập mô hình Bedrock](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai12.jpg)
 
 ### 6.2. Policy Truy Cập S3, Bedrock Và OpenSearch Serverless
 
@@ -366,7 +366,7 @@ Tạo policy `pharmacare-rag-access-policy`:
 }
 ```
 
-   ![IAM Policy truy cập kho tri thức và Vector Store](/images/5-Workshop/5.5-chat-ai/ai13.jpg)
+   ![IAM Policy truy cập kho tri thức và Vector Store](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai13.jpg)
 
 Trong môi trường production, nên tiếp tục giới hạn trường `Resource` về đúng ARN của model và OpenSearch Collection để tuân thủ nguyên tắc **Least Privilege**.
 
@@ -393,7 +393,7 @@ Amazon OpenSearch Serverless được sử dụng làm Vector Store để lưu e
 4. Nhấn **Create** và chờ trạng thái collection chuyển sang `Active`.
 5. Ghi nhận OpenSearch endpoint để cấu hình cho Lambda.
 
-   ![OpenSearch Serverless Vector Store của PharmaCare](/images/5-Workshop/5.5-chat-ai/ai14.jpg)
+   ![OpenSearch Serverless Vector Store của PharmaCare](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai14.jpg)
 
 Collection private bảo đảm vector tài liệu không thể bị truy cập trực tiếp từ Internet. Chỉ các principal được khai báo trong Data Access Policy và có đường mạng qua VPC Endpoint mới được phép thao tác dữ liệu.
 
@@ -415,7 +415,7 @@ Tạo Data Access Policy với các thông tin:
   aoss:WriteDocument
   ```
 
-   ![Data Access Policy cho OpenSearch Serverless](/images/5-Workshop/5.5-chat-ai/ai15.jpg)
+   ![Data Access Policy cho OpenSearch Serverless](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai15.jpg)
 
 IAM Policy và OpenSearch Data Access Policy là hai lớp quyền độc lập. Lambda phải được cấp quyền ở cả hai lớp thì mới có thể ghi hoặc truy vấn vector.
 
@@ -457,7 +457,7 @@ Lambda Indexing chịu trách nhiệm chuyển đổi tài liệu thô trong S3 
 
 4. Đóng gói mã nguồn cùng thư viện phụ thuộc và triển khai lên Lambda. Có thể sử dụng AWS Toolkit trong Visual Studio Code và nhấn **Deploy (Ctrl+Shift+U)**.
 
-   ![Mã nguồn Lambda Indexing](/images/5-Workshop/5.5-chat-ai/ai16.jpg)
+   ![Mã nguồn Lambda Indexing](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai16.jpg)
 
 ### 8.1. Cấu Hình Environment Variables
 
@@ -472,7 +472,7 @@ Cấu hình sáu biến môi trường:
 | `OPENSEARCH_ENDPOINT` | `Endpoint của collection OpenSearch Serverless` |
 | `OPENSEARCH_INDEX` | `pharmacare-knowledge-index` |
 
-   ![Environment Variables của Lambda Indexing](/images/5-Workshop/5.5-chat-ai/ai17.jpg)
+   ![Environment Variables của Lambda Indexing](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai17.jpg)
 
 Không nên viết cố định endpoint, bucket hoặc model ID trực tiếp trong mã nguồn. Environment Variables giúp thay đổi cấu hình giữa môi trường development, staging và production mà không cần chỉnh sửa logic chương trình.
 
@@ -493,7 +493,7 @@ Không nên viết cố định endpoint, bucket hoặc model ID trực tiếp t
    * Tạo `1186` chunk.
    * Ghi dữ liệu thành công vào OpenSearch Vector Store.
 
-   ![Kết quả kiểm thử Lambda Indexing](/images/5-Workshop/5.5-chat-ai/ai18.jpg)
+   ![Kết quả kiểm thử Lambda Indexing](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai18.jpg)
 
 Kết quả này xác nhận luồng S3 → Lambda → Bedrock Embedding → OpenSearch Serverless đã hoạt động thành công.
 
@@ -531,7 +531,7 @@ Lambda Chatbot tiếp nhận câu hỏi từ người dùng và thực hiện qu
 
 3. Triển khai mã nguồn chatbot lên Lambda.
 
-   ![Lambda Chatbot của PharmaCare](/images/5-Workshop/5.5-chat-ai/ai19.jpg)
+   ![Lambda Chatbot của PharmaCare](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai19.jpg)
 
 ### 9.1. Cấu Hình Environment Variables
 
@@ -546,7 +546,7 @@ Lambda Chatbot tiếp nhận câu hỏi từ người dùng và thực hiện qu
 | `OPENSEARCH_INDEX` | `pharmacare-knowledge-index` |
 | `TOP_K` | `3` |
 
-   ![Environment Variables của Lambda Chatbot](/images/5-Workshop/5.5-chat-ai/ai20.jpg)
+   ![Environment Variables của Lambda Chatbot](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai20.jpg)
 
 Ý nghĩa của các biến quan trọng:
 
@@ -573,7 +573,7 @@ Sau đó nhấn **Test** và kiểm tra:
 * Response có nội dung tham khảo và nguồn tài liệu.
 * Không xuất hiện lỗi timeout, DNS hoặc thiếu quyền IAM.
 
-   ![Kết quả kiểm thử Lambda Chatbot](/images/5-Workshop/5.5-chat-ai/ai21.jpg)
+   ![Kết quả kiểm thử Lambda Chatbot](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai21.jpg)
 
 Trong giai đoạn phát triển, `ENABLE_LLM=false` giúp giảm tiêu thụ quota token. Chatbot vẫn thực hiện tìm kiếm ngữ nghĩa bằng Cohere Embedding và OpenSearch, sau đó trả về nội dung từ kho tri thức nội bộ.
 
@@ -628,7 +628,7 @@ Sau khi Lambda Chatbot hoạt động ổn định, thực hiện tích hợp gi
    VITE_CHAT_API_URL=https://your-api-id.execute-api.ap-southeast-1.amazonaws.com/chat
    ```
 
-   ![Tích hợp Chatbot vào frontend React](/images/5-Workshop/5.5-chat-ai/ai22.jpg)
+   ![Tích hợp Chatbot vào frontend React](/workshop_internship_report/images/5-Workshop/5.5-chat-ai/ai22.jpg)
 
 Để tránh lỗi CORS, API Gateway hoặc Lambda Function URL phải cho phép origin của frontend PharmaCare và hỗ trợ phương thức `POST`, `OPTIONS`.
 

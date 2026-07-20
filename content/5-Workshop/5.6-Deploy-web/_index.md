@@ -68,11 +68,11 @@ Amazon S3 is used as the origin that stores the HTML, CSS, JavaScript, and other
 
 5. Review the settings and click **Create bucket**.
 
-   ![Create an S3 bucket for the PharmaCare frontend](/images/5-Workshop/5.6-deploy-web/deploy1.jpg)
+   ![Create an S3 bucket for the PharmaCare frontend](/workshop_internship_report/images/5-Workshop/5.6-deploy-web/deploy1.jpg)
 
 After the bucket is created, open it and confirm that the **Objects** tab is empty.
 
-   ![Frontend S3 bucket created successfully](/images/5-Workshop/5.6-deploy-web/deploy2.jpg)
+   ![Frontend S3 bucket created successfully](/workshop_internship_report/images/5-Workshop/5.6-deploy-web/deploy2.jpg)
 
 The bucket remains private. Users access the website through Amazon CloudFront instead of connecting directly to S3. This design hides the origin, improves security, and avoids exposing the bucket publicly.
 
@@ -105,7 +105,7 @@ The bucket remains private. Users access the website through Amazon CloudFront i
    vite.svg
    ```
 
-   ![Upload the dist build files to Amazon S3](/images/5-Workshop/5.6-deploy-web/deploy3.jpg)
+   ![Upload the dist build files to Amazon S3](/workshop_internship_report/images/5-Workshop/5.6-deploy-web/deploy3.jpg)
 
 The deployment can also be performed with AWS CLI:
 
@@ -142,7 +142,7 @@ Amazon CloudFront distributes the website through a global network of edge locat
 4. Review the configuration and click **Create distribution**.
 5. Wait until the distribution status changes to **Enabled**.
 
-   ![Create a CloudFront Distribution for the PharmaCare website](/images/5-Workshop/5.6-deploy-web/deploy4.jpg)
+   ![Create a CloudFront Distribution for the PharmaCare website](/workshop_internship_report/images/5-Workshop/5.6-deploy-web/deploy4.jpg)
 
 After deployment, CloudFront provides a public domain in the following format:
 
@@ -188,7 +188,7 @@ CloudFront must return `index.html` so that React Router can process the request
    * **Response page path:** `/index.html`.
    * **HTTP response code:** `200`.
 
-   ![Configure CloudFront Error Pages for React Router](/images/5-Workshop/5.6-deploy-web/deploy5.jpg)
+   ![Configure CloudFront Error Pages for React Router](/workshop_internship_report/images/5-Workshop/5.6-deploy-web/deploy5.jpg)
 
 After this configuration, CloudFront can return the React application for routes such as:
 
@@ -223,7 +223,7 @@ CloudFront may continue serving an old build because content is cached at edge l
 5. Click **Create invalidation**.
 6. Wait until the status changes from `In progress` to `Completed`.
 
-   ![Create a CloudFront Invalidation after updating the frontend](/images/5-Workshop/5.6-deploy-web/deploy6.png)
+   ![Create a CloudFront Invalidation after updating the frontend](/workshop_internship_report/images/5-Workshop/5.6-deploy-web/deploy6.png)
 
 The invalidation can also be created with AWS CLI:
 
@@ -279,7 +279,7 @@ After the frontend receives a CloudFront domain, Amazon Cognito must be updated 
 
 8. Click **Save changes**.
 
-   ![Update callback and sign-out URLs in Amazon Cognito](/images/5-Workshop/5.6-deploy-web/deploy7.png)
+   ![Update callback and sign-out URLs in Amazon Cognito](/workshop_internship_report/images/5-Workshop/5.6-deploy-web/deploy7.png)
 
 When a custom domain is used, add it to both the callback and sign-out URL lists. The protocol, hostname, port, and path must match exactly; otherwise, Cognito may return a `redirect_mismatch` error.
 
@@ -302,7 +302,7 @@ Amazon Route 53 is used to search for, register, and manage a domain for the Pha
 9. Enable or verify privacy protection when supported.
 10. Complete the payment and verify the registration email.
 
-   ![Search for and register a PharmaCare domain in Route 53](/images/5-Workshop/5.6-deploy-web/deploy8.jpg)
+   ![Search for and register a PharmaCare domain in Route 53](/workshop_internship_report/images/5-Workshop/5.6-deploy-web/deploy8.jpg)
 
 The screenshot indicates that the searched domain may not be available. In this case, select an alternative from the suggested domains or use another name that is appropriate for the PharmaCare brand.
 

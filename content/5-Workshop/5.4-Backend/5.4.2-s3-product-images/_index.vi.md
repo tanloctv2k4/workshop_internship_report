@@ -20,7 +20,7 @@ pre : " <b> 5.4.2 </b> "
    * **Default encryption:** Chọn **Server-side encryption with Amazon S3 managed keys (SSE-S3)** và bật **Bucket Key: Enable** để tự động mã hóa dữ liệu ở trạng thái nghỉ (data at rest), đồng thời tối ưu chi phí gọi lệnh mã hóa.
 3. Kiểm tra lại toàn bộ cấu hình trực quan và nhấn nút **Create bucket** để hoàn tất khởi tạo.
 
-   ![Khởi tạo S3 Bucket cho PharmaCare](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket1.jpg)
+   ![Khởi tạo S3 Bucket cho PharmaCare](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket1.jpg)
 
 Việc thiết lập S3 Bucket với quy tắc bảo mật **Block all public access** là tiêu chuẩn bắt buộc trong kiến trúc Cloud Native của PharmaCare. Thay vì mở công khai bucket ra Internet — tiềm ẩn rủi ro tấn công DDoS, rà quét trái phép và chi phí phát sinh truyền tải lớn — hệ thống đóng kín lưu trữ gốc và chỉ phân quyền truy cập thông qua mạng lưới phân phối nội dung (CloudFront CDN) bằng các cơ chế bảo mật tự động của AWS.
 
@@ -36,16 +36,16 @@ Việc thiết lập S3 Bucket với quy tắc bảo mật **Block all public ac
    * **Server-side encryption:** Chọn **Don't specify an encryption key** (Thư mục sẽ tự động kế thừa cấu hình mã hóa mặc định SSE-S3 từ Bucket).
    * Nhấn nút **Create folder** để xác nhận.
 
-   ![Tạo thư mục products trong S3](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket2.jpg)
+   ![Tạo thư mục products trong S3](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket2.jpg)
 
 4. Khi thư mục `products/` xuất hiện trong danh sách đối tượng với trạng thái sẵn sàng, click trực tiếp vào thư mục để tiến vào không gian lưu trữ bên trong.
 
-   ![Danh sách đối tượng trong bucket](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket3.jpg)
+   ![Danh sách đối tượng trong bucket](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket3.jpg)
 
 5. Nhấn nút **Upload**, tiếp tục chọn **Add files** và chọn tập hợp các tệp ảnh sản phẩm AI của PharmaCare (từ `PC-0001.png` đến `PC-0016.png` cùng các tệp liên quan, tổng cộng 193 đối tượng).
 6. Giữ nguyên hạng mục lưu trữ ở mức **Standard** và nhấn **Upload** để thực hiện truyền tải dữ liệu lên đám mây.
 
-   ![Tải ảnh sản phẩm vào thư mục products](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket4.jpg)
+   ![Tải ảnh sản phẩm vào thư mục products](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket4.jpg)
 
 Mặc dù Amazon S3 lưu trữ dữ liệu dưới dạng cấu trúc phẳng (flat storage schema), việc sử dụng tiền tố thư mục (prefix) `products/` giúp tổ chức không gian định danh một cách logic, dễ dàng phân loại tài nguyên, áp dụng các chính sách vòng đời (Lifecycle rules) và hỗ trợ định tuyến chính xác trên CDN khi mở rộng quy mô hệ thống sau này.
 
@@ -57,7 +57,7 @@ Mặc dù Amazon S3 lưu trữ dữ liệu dưới dạng cấu trúc phẳng (f
 1. Mở [Amazon CloudFront console](https://console.aws.amazon.com/cloudfront/v3/home), điều hướng đến mục **Distributions** và nhấn chọn **Create distribution**.
 2. **Bước 1 - Choose a plan:** Chọn gói **Free ($0/month)** được cung cấp cho mục đích học tập và phát triển hệ thống, tích hợp sẵn các bảo vệ DDoS (Always-on DDoS protection), chứng chỉ TLS miễn phí, Tiered caching, cùng định mức 1M requests / 100GB lưu lượng hàng tháng. Nhấn **Next**.
 
-   ![Chọn gói CloudFront Free Plan](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket5.jpg)
+   ![Chọn gói CloudFront Free Plan](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket5.jpg)
 
 3. **Bước 2 - Get started (Distribution options):**
    * **Distribution name:** `pharmacare-product-images-cdn` (Định danh hệ thống mạng lưới CDN).
@@ -65,7 +65,7 @@ Mặc dù Amazon S3 lưu trữ dữ liệu dưới dạng cấu trúc phẳng (f
    * **Distribution type:** Chọn **Single website or app** (Tối ưu hóa cấu hình cho kiến trúc ứng dụng độc lập).
    * Nhấn **Next**.
 
-   ![Cấu hình thông tin cơ bản CloudFront](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket6.jpg)
+   ![Cấu hình thông tin cơ bản CloudFront](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket6.jpg)
 
 4. **Bước 3 - Specify origin:**
    * **Origin type:** Chọn **Amazon S3**.
@@ -75,19 +75,19 @@ Mặc dù Amazon S3 lưu trữ dữ liệu dưới dạng cấu trúc phẳng (f
    * **Cache settings:** Chọn **Use recommended cache settings tailored to serving S3 content** (Tối ưu bộ nhớ đệm cho tệp tĩnh).
    * Nhấn **Next**.
 
-   ![Cấu hình Origin S3 cho CloudFront](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket7.jpg)
+   ![Cấu hình Origin S3 cho CloudFront](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket7.jpg)
 
 5. **Bước 4 - Enable security:**
    * Tại mục **Web Application Firewall (WAF)**, chế độ bảo mật tích hợp sẵn (**Included security protections**) được tự động kích hoạt để bảo vệ ứng dụng trước các lỗ hổng web phổ biến, ngăn chặn các tác nhân rà quét độc hại và chặn các IP thuộc danh sách đe dọa (Threat intelligence).
    * Nhấn **Next**.
 
-   ![Kích hoạt bảo mật WAF tích hợp](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket8.jpg)
+   ![Kích hoạt bảo mật WAF tích hợp](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket8.jpg)
 
 6. **Bước 5 - Review and create:**
    * Kiểm tra tổng thể các thông số cấu hình. Ghi nhận thông báo hệ thống: *"Because you granted CloudFront access to your origin, CloudFront can write and update S3 bucket policies that restrict access to your S3 origin to CloudFront"*.
    * Nhấn nút **Create distribution** để kích hoạt tiến trình triển khai mạng lưới biên toàn cầu.
 
-   ![Xác nhận và tạo CloudFront Distribution](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket9.jpg)
+   ![Xác nhận và tạo CloudFront Distribution](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket9.jpg)
 
 Amazon CloudFront đóng vai trò là mạng phân phối nội dung toàn cầu với hàng trăm máy chủ biên (Edge Locations). Khi người dùng cuối truy cập giao diện PharmaCare, hình ảnh sản phẩm sẽ được phục vụ trực tiếp từ máy chủ biên gần nhất thay vì phải gửi yêu cầu về S3 gốc tại Singapore, mang lại các lợi ích vượt trội:
 * **Giảm tối đa độ trễ (Latency):** Tăng tốc tải trang gấp nhiều lần, nâng cao trải nghiệm mượt mà cho người dùng.
@@ -104,7 +104,7 @@ Amazon CloudFront đóng vai trò là mạng phân phối nội dung toàn cầu
    * **Distribution domain name:** `d2sq4q0ymcz8do.cloudfront.net` (Tên miền công khai chính thức sử dụng để truy cập tài nguyên ảnh sản phẩm).
    * **ARN:** `arn:aws:cloudfront::392646748514:distribution/E105N1I4TWNVYQ`.
 
-   ![Trạng thái triển khai CloudFront thành công](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket10.jpg)
+   ![Trạng thái triển khai CloudFront thành công](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket10.jpg)
 
 3. **Kiểm tra nhanh (Smoke Test):** Mở trình duyệt web và truy cập thử vào đường dẫn hình ảnh thực tế theo định dạng tên miền CDN:
    `https://d2sq4q0ymcz8do.cloudfront.net/products/PC-0001.png` để xác nhận tài nguyên được phục vụ thành công qua CloudFront mà không cần mở quyền truy cập public trên S3.
@@ -151,7 +151,7 @@ Amazon CloudFront đóng vai trò là mạng phân phối nội dung toàn cầu
      };
      ```
 
-   ![Chỉnh sửa mã nguồn migration trong VS Code](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket11.jpg)
+   ![Chỉnh sửa mã nguồn migration trong VS Code](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket11.jpg)
 
 3. Đóng gói tệp mã nguồn cùng các thư viện phụ thuộc (`node_modules`) thành tệp nén `function.zip` thông qua lệnh Terminal (PowerShell):
    ```powershell
@@ -164,7 +164,7 @@ Amazon CloudFront đóng vai trò là mạng phân phối nội dung toàn cầu
 
    Ngoài ra, có thể sử dụng trực tiếp tiện ích mở rộng **AWS Toolkit** trong Visual Studio Code bằng cách nhấn **Deploy (Ctrl+Shift+U)** để triển khai mã nguồn lên AWS Lambda.
 
-   ![Cập nhật và triển khai mã nguồn lên AWS Lambda](/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket12.jpg)
+   ![Cập nhật và triển khai mã nguồn lên AWS Lambda](/workshop_internship_report/images/5-Workshop/5.4-lambda-backend/5.4.2-s3-product-images/s3bucket12.jpg)
 
 6. Thực thi chức năng **Test** của Lambda để kích hoạt lệnh migration SQL. Kiểm tra nhật ký thực thi trong **Amazon CloudWatch Logs** nhằm xác nhận rằng tất cả bản ghi sản phẩm trong Amazon RDS đã được cập nhật thành công trường `image_url`, trỏ đến endpoint CDN của CloudFront.
 
